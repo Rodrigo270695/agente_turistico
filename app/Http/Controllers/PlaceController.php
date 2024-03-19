@@ -8,12 +8,12 @@ use Inertia\Inertia;
 
 class PlaceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return Inertia::render('Places/Index');
+        $places = Place::orderBy('id', 'desc')->paginate(7);
+
+        return Inertia::render('Places/Index', compact('places'));
     }
 
     /**

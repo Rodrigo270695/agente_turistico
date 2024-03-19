@@ -19,6 +19,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "oh-vue-icons": "^1.0.0-rc3"
+        "oh-vue-icons": "^1.0.0-rc3",
+        "sweetalert2": "^11.10.6"
     }
 }
