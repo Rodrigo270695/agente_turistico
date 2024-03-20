@@ -14,15 +14,20 @@ class PlaceRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            
+            'name' => 'required|string|max:100|unique:places',
+            'department' => 'required|string|max:50',
+            'province' => 'required|string|max:50',
+            'district' => 'required|string|max:100',
+            'address' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type_place' => 'required|string|max:50',
+            'care_day' => 'required|string|max:50',
+            'opening_hours' => 'required|string|max:50',
+            'price' => 'required|numeric',
+            'access' => 'required|string|max:50',
         ];
     }
 }

@@ -7,6 +7,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import ToastList from '@/Components/ToastList.vue';
 
 defineProps({
     title: String,
@@ -32,6 +33,8 @@ const logout = () => {
         <Head :title="title" />
 
         <Banner />
+
+        <ToastList />
 
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">

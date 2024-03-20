@@ -22,6 +22,16 @@ const addPlace = () => {
     showModal.value = true;
 };
 
+const editPlace = (place) => {
+    placeObj.value = place;
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    placeObj.value = null;
+    showModal.value = false;
+};
+
 </script>
 
 <template>
@@ -96,26 +106,38 @@ const addPlace = () => {
                                             {{ place.name }}
                                         </td>
                                         <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
-                                            {{ place.department }}
+                                            {{ place.province }} -  {{ place.district }}
+                                        </td>
+                                        <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
+                                            {{ place.address }}
+                                        </td>
+                                        <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
+                                            {{ place.care_day }}
+                                        </td>
+                                        <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
+                                            {{ place.opening_hours }}
+                                        </td>
+                                        <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
+                                            {{ place.price }}
                                         </td>
 
                                         <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
-<!--                                             <button
-                                                class="bg-yellow-500 text-white p-1 rounded-md hover:bg-yellow-600 cursor-pointer mr-1"
-                                                @click="editUser(usuario)"
+                                            <button
+                                                class="bg-yellow-500 text-white p-1 rounded-full hover:bg-yellow-600 cursor-pointer mr-1"
+                                                @click="editPlace(place)"
                                             >
                                                 <v-icon
                                                     name="md-modeedit-round"
                                                 />
                                             </button>
                                             <button
-                                                class="text-white p-1 rounded-md bg-red-400 hover:bg-red-500"
+                                                class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500"
                                                 @click.prevent="deleteUser(usuario)"
                                             >
                                                 <v-icon
                                                     name="bi-trash"
                                                 />
-                                            </button> -->
+                                            </button>
                                         </td>
                                     </tr>
                                     <tr v-if="places.data.length <= 0">
