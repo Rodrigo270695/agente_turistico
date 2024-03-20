@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('address', 255);
             $table->text('description');
             $table->string('type_place',50);
-            $table->string('care_day',15);
-            $table->string('opening _hours',15);
+            $table->string('care_day',50);
+            $table->string('opening_hours',50);
             $table->double('price');
             $table->string('access', 50);
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Place;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,9 +12,10 @@ class PlaceController extends Controller
 
     public function index()
     {
+        $departments = Department::with(['provinces.districts'])->get();
         $places = Place::orderBy('id', 'desc')->paginate(7);
 
-        return Inertia::render('Places/Index', compact('places'));
+        return Inertia::render('Places/Index', compact('places','departments'));
     }
 
     /**

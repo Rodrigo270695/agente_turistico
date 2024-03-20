@@ -11,6 +11,7 @@ let placeObj = ref(null);
 let showModal = ref(false);
 
 const props = defineProps({
+    departments: Array,
     places: Array,
     text: String,
 })
@@ -129,7 +130,7 @@ const addPlace = () => {
                     </div>
 
                     <Modal :show="showModal" @close="showModal = false">
-                        <PlaceForm  /><!-- :user="userEdit" @close-modal="closeModal" -->
+                        <PlaceForm :departments="departments" :place="placeObj" @close-modal="closeModal" />
                     </Modal>
 
                 </div>
