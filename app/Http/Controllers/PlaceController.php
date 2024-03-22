@@ -53,6 +53,11 @@ class PlaceController extends Controller
 
     public function destroy(Place $place)
     {
-        //
+        try {
+            $place->delete();
+            return redirect()->route('places.index')->with('toast', ['Lugar eliminado exitosamente!', 'success']);
+        } catch (QueryException $e) {
+            return redirect()->back()->with('toast', ['No se pudo eliminar el lugar!', 'danger']);
+        }
     }
 }

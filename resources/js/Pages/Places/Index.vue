@@ -6,20 +6,31 @@ import { useForm } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
 import Swal from "sweetalert2";
 import PlaceForm from './PlaceForm.vue';
+import UploadImage from './photos/UploadImage.vue';
 
 let placeObj = ref(null);
 let showModal = ref(false);
+let photoModal = ref(false);
 
 const props = defineProps({
     departments: Array,
     places: Array,
     text: String,
 })
+
 let query = ref(props.text);
+
+const form = useForm({
+    place: Object
+})
 
 const addPlace = () => {
     placeObj.value = null;
     showModal.value = true;
+};
+
+const addPhoto = () => {
+    photoModal.value = true;
 };
 
 const editPlace = (place) => {
@@ -30,6 +41,25 @@ const editPlace = (place) => {
 const closeModal = () => {
     placeObj.value = null;
     showModal.value = false;
+};
+
+const deletePlace = (place) => {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¿De eliminar el lugar: "+place.name,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar!",
+        cancelButtonText: "No, cancelar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route("places.destroy", place), {
+                preserveScroll: true,
+            });
+        }
+    });
 };
 
 </script>
@@ -123,6 +153,14 @@ const closeModal = () => {
 
                                         <td class="text-xs md:text-sm px-6 py-4 whitespace-nowrap">
                                             <button
+                                                class="bg-green-500 text-white p-1 rounded-full hover:bg-green-600 cursor-pointer mr-1"
+                                                @click="addPhoto(place)"
+                                            >
+                                                <v-icon
+                                                    name="md-addphotoalternate-round"
+                                                />
+                                            </button>
+                                            <button
                                                 class="bg-yellow-500 text-white p-1 rounded-full hover:bg-yellow-600 cursor-pointer mr-1"
                                                 @click="editPlace(place)"
                                             >
@@ -132,7 +170,7 @@ const closeModal = () => {
                                             </button>
                                             <button
                                                 class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500"
-                                                @click.prevent="deleteUser(usuario)"
+                                                @click.prevent="deletePlace(place)"
                                             >
                                                 <v-icon
                                                     name="bi-trash"
@@ -153,6 +191,10 @@ const closeModal = () => {
 
                     <Modal :show="showModal" @close="showModal = false">
                         <PlaceForm :departments="departments" :place="placeObj" @close-modal="closeModal" />
+                    </Modal>
+
+                    <Modal :show="photoModal" @close="photoModal = false">
+                        <UploadImage  />
                     </Modal>
 
                 </div>
