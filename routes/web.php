@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlaceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::resource('places', PlaceController::class);
+    Route::resource('photos', PhotoController::class);
 
 });
 

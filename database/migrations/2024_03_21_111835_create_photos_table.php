@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('image',50);
+            $table->unsignedBigInteger('place_id')->comment('llave foranea');
+            $table->foreign('place_id')
+            ->references('id')
+            ->on('places')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
             $table->timestamps();
         });
     }
