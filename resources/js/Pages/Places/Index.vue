@@ -30,7 +30,7 @@ const addPlace = () => {
 };
 
 const addPhoto = (place) => {
-    placeObj.value = placeObj;
+    placeObj.value = place;
     photoModal.value = true;
 };
 
@@ -42,6 +42,7 @@ const editPlace = (place) => {
 const closeModal = () => {
     placeObj.value = null;
     showModal.value = false;
+    photoModal.value = false;
 };
 
 const deletePlace = (place) => {
@@ -195,7 +196,7 @@ const deletePlace = (place) => {
                     </Modal>
 
                     <Modal :show="photoModal" @close="photoModal = false">
-                        <UploadImage :place="placeObj" />
+                        <UploadImage :place="placeObj" @close-modal="closeModal"/>
                     </Modal>
 
                 </div>

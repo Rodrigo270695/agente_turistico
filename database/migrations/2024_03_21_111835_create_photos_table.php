@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->string('image',50);
+            $table->string('image',255);
             $table->unsignedBigInteger('place_id')->comment('llave foranea');
             $table->foreign('place_id')
             ->references('id')

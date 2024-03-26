@@ -1,6 +1,7 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { Inertia } from '@inertiajs/inertia'
 
 const props = defineProps({
     place: Object
@@ -45,31 +46,33 @@ const handleDrop = (event) => {
     processFiles(files);
 };
 
+const emit = defineEmits(["close-modal"]);
 
 const uploadImages = () => {
     if (imageFiles.value.length === 0) {
         console.error("No hay imágenes seleccionadas para subir.");
-        return; // Detiene la ejecución si no hay archivos
+        return;
     }
 
-    // Prepara los datos para enviar
     let formData = new FormData();
-    formData.append('place_id', form.place_id);
+    formData.append('place_id', props.place.id);
     for (let i = 0; i < imageFiles.value.length; i++) {
         formData.append('photos[]', imageFiles.value[i]);
     }
 
-    // Utiliza form.post de Inertia.js para enviar los datos
-    form.post(route('photos.store'), {
-        // Inertia.js maneja FormData automáticamente, así que solo pasa el objeto FormData directamente
-        data: formData,
-        onSuccess: () => {
-            emit('close-modal');
-            form.reset('photos'); // Opcional: resetea el campo del formulario después del éxito
+    Inertia.post(route('photos.store'), formData, {
+        onBefore: () => {
+            // Opcional: acciones antes de enviar la solicitud
         },
-        onError: (error) => console.error("Error al subir las imágenes:", error),
+        onSuccess: () => {
+            emit('close-modal')
+        },
+        onError: (error) => {
+            console.error("Error al subir las imágenes:", error);
+        }
     });
 };
+
 
 </script>
 
