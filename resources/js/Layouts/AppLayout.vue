@@ -54,7 +54,16 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('places.index')" :active="route().current('places.index')">
+                                <NavLink :href="route('categorias.index')" :active="route().current('categorias.index')">
+                                    Categorias
+                                </NavLink>
+                                <NavLink :href="route('tipocategorias.index')" :active="route().current('tipocategorias.index')">
+                                    Tipos
+                                </NavLink>
+                                <NavLink :href="route('subcategorias.index')" :active="route().current('subcategorias.index')">
+                                    Sub Tipos
+                                </NavLink>
+                                <NavLink :href="route('lugares.index')" :active="route().current('lugares.index')">
                                     Lugares
                                 </NavLink>
                             </div>
@@ -200,7 +209,16 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('categorias.index')" :active="route().current('categorias.index')">
+                            Categorias
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('tipocategorias.index')" :active="route().current('tipocategorias.index')">
+                            Tipos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('subcategorias.index')" :active="route().current('subcategorias.index')">
+                            Sub Tipos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('lugares.index')" :active="route().current('lugares.index')">
                             Lugares
                         </ResponsiveNavLink>
                     </div>

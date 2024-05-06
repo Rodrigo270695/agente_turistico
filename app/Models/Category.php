@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Photo extends Model
+class Category extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function place(): BelongsTo
+    public function typeCategories(): HasMany
     {
-        return $this->belongsTo(Place::class);
+        return $this->hasMany(TypeCategory::class);
     }
-
 }

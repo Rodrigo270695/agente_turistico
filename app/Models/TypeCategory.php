@@ -7,20 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class District extends Model
+class TypeCategory extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function province(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function places(): HasMany
+    public function subCategories(): HasMany
     {
-        return $this->hasMany(Place::class);
+        return $this->hasMany(SubCategory::class);
     }
-
 }

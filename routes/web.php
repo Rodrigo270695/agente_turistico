@@ -1,21 +1,14 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\TypeCategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -43,8 +36,24 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::resource('places', PlaceController::class);
-    Route::resource('photos', PhotoController::class);
+    /* Categorias */
+    Route::get('categorias/search', [CategoryController::class, 'search' ])->name('categorias.search');
+    Route::resource('categorias', CategoryController::class);
+    Route::put('categorias/change/{category}', [CategoryController::class, 'change'])->name('categorias.change');
 
+    /* Tipo de categorias */
+    Route::get('tipocategorias/search', [TypeCategoryController::class, 'search' ])->name('tipocategorias.search');
+    Route::resource('tipocategorias', TypeCategoryController::class);
+    Route::put('tipocategorias/change/{types}', [TypeCategoryController::class, 'change'])->name('tipocategorias.change');
+
+    /* Sub Categoria */
+    Route::get('subcategorias/search', [SubCategoryController::class, 'search' ])->name('subcategorias.search');
+    Route::resource('subcategorias', SubCategoryController::class);
+    Route::put('subcategorias/change/{subcategory}', [SubCategoryController::class, 'change'])->name('subcategorias.change');
+
+    /* Lugares */
+    Route::get('lugares/search', [PlaceController::class, 'search' ])->name('lugares.search');
+    Route::resource('lugares', PlaceController::class);
+    Route::put('lugares/change/{place}', [PlaceController::class, 'change'])->name('lugares.change');
 });
 

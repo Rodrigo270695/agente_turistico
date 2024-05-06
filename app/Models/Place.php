@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Place extends Model
 {
@@ -12,8 +12,14 @@ class Place extends Model
 
     protected $guarded = [];
 
-    public function photos(): HasMany
+
+    public function district(): BelongsTo
     {
-        return $this->hasMany(Photo::class);
+        return $this->belongsTo(District::class);
+    }
+
+    public function subCategory(): BelongsTo
+    {
+        return $this->belongsTo(SubCategory::class);
     }
 }

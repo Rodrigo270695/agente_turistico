@@ -9,6 +9,7 @@ import { ref, defineProps, watch, onMounted } from "vue";
 const props = defineProps({
     place: Object,
     departments: Array,
+    subcategories: Array,
 });
 
 const selection = ref("no");
@@ -20,38 +21,44 @@ const selectedDistrict = ref(null);
 
 const form = useForm({
     id: props.place ? props.place.id : "",
-    name: props.place ? props.place.name : "",
-    department: props.place ? props.place.department : "",
-    province: props.place ? props.place.province : "",
-    district: props.place ? props.place.district : "",
-    description: props.place ? props.place.description : "",
-    address: props.place ? props.place.address : "",
-    type_place: props.place ? props.place.type_place : "",
-    care_day: props.place ? props.place.care_day : "",
-    opening_hours: props.place ? props.place.opening_hours : "",
-    price: props.place ? props.place.price : "",
-    access: props.place ? props.place.access : "",
+    nombre: props.place ? props.place.nombre : "",
+    latitud: props.place ? props.place.latitud : "",
+    longitud: props.place ? props.place.longitud : "",
+    dias_abierto_desde: props.place ? props.place.dias_abierto_desde : "",
+    dias_cerrado_hasta: props.place ? props.place.dias_cerrado_hasta : "",
+    hora_apertura: props.place ? props.place.hora_apertura : "",
+    hora_cierre: props.place ? props.place.hora_cierre : "",
+    direccion: props.place ? props.place.direccion : "",
+    tipo_acceso: props.place ? props.place.tipo_acceso : "",
+    district_id: props.place ? props.place.district_id : null,
+    sub_category_id: props.place ? props.place.sub_category_id : null,
 });
 
-watch(() => props.place, (newPlace) => {
-    if (newPlace) {
-        selectedDepartment.value = newPlace.department;
-        const department = props.departments.find(d => d.name === selectedDepartment.value);
-        if (department) {
-            provinces.value = department.provinces;
-            selectedProvince.value = newPlace.province;
-            const province = department.provinces.find(p => p.name === selectedProvince.value);
-            if (province) {
-                districts.value = province.districts;
-                selectedDistrict.value = newPlace.district;
+watch(
+    () => props.place,
+    (newPlace) => {
+        if (newPlace) {
+            selectedDepartment.value = newPlace.department;
+            const department = props.departments.find(
+                (d) => d.name === selectedDepartment.value
+            );
+            if (department) {
+                provinces.value = department.provinces;
+                selectedProvince.value = newPlace.province;
+                const province = department.provinces.find(
+                    (p) => p.name === selectedProvince.value
+                );
+                if (province) {
+                    districts.value = province.districts;
+                    selectedDistrict.value = newPlace.district;
+                }
             }
+            form.id = newPlace.id;
+            form.name = newPlace.name;
         }
-        form.id = newPlace.id;
-        form.name = newPlace.name;
-    }
-}, { immediate: true });
-
-
+    },
+    { immediate: true }
+);
 
 watch(selectedDepartment, (newValue) => {
     if (newValue) {
@@ -102,9 +109,9 @@ const toTitleCase = (str) => {
 
 const submit = () => {
     if (props.place) {
-        form.put(route('places.update', props.place.id), {
+        form.put(route("places.update", props.place.id), {
             preserveScroll: true,
-            onSuccess: () => emit('close-modal')
+            onSuccess: () => emit("close-modal"),
         });
     } else {
         form.post(route("places.store"), {
@@ -116,37 +123,47 @@ const submit = () => {
 
 const emit = defineEmits(["close-modal"]);
 
-const datos = [
-    { id: 1, name: "A" },
-    { id: 2, name: "B" },
-    { id: 3, name: "C" },
+const access = [
+    { id: 1, name: "TOTAL" },
+    { id: 2, name: "PARCIAL" },
 ];
 
-const access = [
-    { id: 1, name: "A" },
-    { id: 2, name: "B" },
-    { id: 3, name: "C" },
+const days = [
+    { id: 1, name: "Lunes" },
+    { id: 2, name: "Martes" },
+    { id: 2, name: "Miércoles" },
+    { id: 2, name: "Jueves" },
+    { id: 2, name: "Viernes" },
+    { id: 2, name: "Sábado" },
+    { id: 2, name: "Domingo" },
 ];
 </script>
 
 <template>
     <form @submit.prevent="submit">
         <div class="bg-white shadow-md rounded-md p-4">
-            <div class="text-lg font-bold mb-4">
-                {{ form.id == 0 ? "Registrar Lugar" : "Actualizar Lugar" }}
+            <div
+                class="text-lg sm:text-xl text-slate-800 font-bold mb-4 border-b-2"
+            >
+                {{
+                    form.id == 0
+                        ? "Registrar Lugar"
+                        : "Actualizar Lugar"
+                }}
             </div>
             <div class="mb-4">
-                <div class="grid grid-cols-6 gap-3">
-                    <div class="col-span-6 sm:col-span-3">
+                <div class="grid grid-cols-8 gap-3">
+
+                    <div class="col-span-8 sm:col-span-4">
                         <InputLabel value="Nombre" />
                         <TextInput
                             class="w-full"
-                            v-model="form.name"
-                            @input="form.name = toTitleCase(form.name)"
+                            v-model="form.nombre"
+                            @input="form.nombre = toTitleCase(form.nombre)"
                         />
                         <InputError
                             class="w-full"
-                            :message="form.errors.name"
+                            :message="form.errors.nombre"
                         />
                     </div>
 
@@ -174,12 +191,14 @@ const access = [
                         />
                     </div>
 
-                    <TextInput
-                        type="hidden"
-                        class="w-full"
-                        v-model="form.department"
-                        :value="selectedDepartment"
-                    />
+                    <div class="col-span-6 sm:col-span-3">
+                        <TextInput
+                            type="hidden"
+                            class="w-full"
+                            v-model="form.department"
+                            :value="selectedDepartment"
+                        />
+                    </div>
 
                     <div class="col-span-6 sm:col-span-3">
                         <InputLabel value="Provincia" />
@@ -204,18 +223,21 @@ const access = [
                             :message="form.errors.province"
                         />
                     </div>
-                    <TextInput
-                        type="hidden"
-                        class="w-full"
-                        v-model="form.province"
-                        :value="selectedProvince"
-                    />
+
+                    <div class="col-span-6 sm:col-span-3">
+                        <TextInput
+                            type="hidden"
+                            class="w-full"
+                            v-model="form.province"
+                            :value="selectedProvince"
+                        />
+                    </div>
 
                     <div class="col-span-6 sm:col-span-3">
                         <InputLabel value="Distrito" />
                         <select
                             id="select"
-                            v-model="form.district"
+                            v-model="form.district_id"
                             class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
                         >
                             <option disabled selected value="">
@@ -231,40 +253,30 @@ const access = [
                         </select>
                         <InputError
                             class="w-full"
-                            :message="form.errors.district"
+                            :message="form.errors.district_id"
                         />
                     </div>
 
                     <div class="col-span-6 sm:col-span-6">
-                        <InputLabel value="Descripción" />
-                        <TextArea class="w-full" v-model="form.description" />
-                        <InputError
-                            class="w-full"
-                            :message="form.errors.description"
-                        />
-                    </div>
-
-                    <div class="col-span-6 sm:col-span-3">
                         <InputLabel value="Dirección" />
-                        <TextInput class="w-full" v-model="form.address" />
+                        <TextArea class="w-full" v-model="form.direccion" />
                         <InputError
                             class="w-full"
-                            :message="form.errors.address"
+                            :message="form.errors.direccion"
                         />
                     </div>
-
                     <div class="col-span-6 sm:col-span-3">
-                        <InputLabel value="Tipo de lugar" />
+                        <InputLabel value="Acceso" />
                         <select
                             id="select"
-                            v-model="form.type_place"
+                            v-model="form.tipo_acceso"
                             class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
                         >
                             <option disabled selected value="">
                                 Seleccione un opción
                             </option>
                             <option
-                                v-for="dato in datos"
+                                v-for="dato in access"
                                 :key="dato.id"
                                 :value="dato.name"
                             >
@@ -273,17 +285,58 @@ const access = [
                         </select>
                         <InputError
                             class="w-full"
-                            :message="form.errors.type_place"
+                            :message="form.errors.tipo_acceso"
                         />
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
                         <InputLabel value="Días de atención" />
-                        <TextInput class="w-full" v-model="form.care_day" />
-                        <InputError
-                            class="w-full"
-                            :message="form.errors.care_day"
-                        />
+                        <div class="grid grid-cols-6 gap-3">
+                            <div class="col-span-6 sm:col-span-3">
+                                <select
+                                    id="select"
+                                    v-model="form.dias_abierto_desde"
+                                    class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
+                                >
+                                    <option disabled selected value="">
+                                        Seleccione un opción
+                                    </option>
+                                    <option
+                                        v-for="day in days"
+                                        :key="day.id"
+                                        :value="day.name"
+                                    >
+                                        {{ day.name }}
+                                    </option>
+                                </select>
+                                <InputError
+                                    class="w-full"
+                                    :message="form.errors.dias_abierto_desde"
+                                />
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <select
+                                    id="select"
+                                    v-model="form.dias_cerrado_hasta"
+                                    class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
+                                >
+                                    <option disabled selected value="">
+                                        Seleccione un opción
+                                    </option>
+                                    <option
+                                        v-for="day in days"
+                                        :key="day.id"
+                                        :value="day.name"
+                                    >
+                                        {{ day.name }}
+                                    </option>
+                                </select>
+                                <InputError
+                                    class="w-full"
+                                    :message="form.errors.dias_cerrado_hasta"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -311,31 +364,9 @@ const access = [
                         />
                     </div>
 
-                    <div class="col-span-6 sm:col-span-3">
-                        <InputLabel value="Acceso" />
-                        <select
-                            id="select"
-                            v-model="form.access"
-                            class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
-                        >
-                            <option disabled selected value="">
-                                Seleccione un opción
-                            </option>
-                            <option
-                                v-for="dato in access"
-                                :key="dato.id"
-                                :value="dato.name"
-                            >
-                                {{ dato.name }}
-                            </option>
-                        </select>
-                        <InputError
-                            class="w-full"
-                            :message="form.errors.access"
-                        />
-                    </div>
                 </div>
             </div>
+
             <div class="flex justify-end">
                 <button
                     class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
