@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            $table->string('latitud', 50);
-            $table->string('longitud', 50);
+            $table->decimal('latitud', 10, 8);
+            $table->decimal('longitud', 10, 8);
             $table->enum('dias_abierto_desde', ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
             $table->enum('dias_cerrado_hasta', ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
             $table->time('hora_apertura');
