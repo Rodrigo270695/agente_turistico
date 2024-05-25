@@ -113,31 +113,37 @@ const deletePlace = (place) => {
                                     <tr>
                                         <th
                                             scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
                                             Lugar
                                         </th>
                                         <th
                                             scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Nombre
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
                                             Categoría
                                         </th>
                                         <th
                                             scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
                                             Atención
                                         </th>
                                         <th
                                             scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
                                             Horario
                                         </th>
                                         <th
                                             scope="col"
-                                            class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            class="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
                                             estado
                                         </th>
@@ -153,31 +159,33 @@ const deletePlace = (place) => {
                                         :key="place.id"
                                     >
                                         <td
-                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            {{
-                                                place.district.province
-                                                    .department.name
-                                            }}/{{
-                                                place.district.province.name
-                                            }}/{{ place.district.name }}
+                                            {{place.district.province.name}}/{{ place.district.name }}
                                         </td>
                                         <td
-                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
+                                            {{place.nombre}}
+                                        </td>
+                                        <td
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
+                                        >
+                                            {{ place.subcategory.typecategory.category
+                                                    .nombre }}/
                                             {{
                                                 place.subcategory.typecategory
                                                     .nombre
                                             }}/{{ place.subcategory.nombre }}
                                         </td>
                                         <td
-                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
                                             {{ place.dias_abierto_desde }} -
                                             {{ place.dias_cerrado_hasta }}
                                         </td>
                                         <td
-                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
                                             {{
                                                 new Date(
@@ -214,7 +222,7 @@ const deletePlace = (place) => {
                                             }}
                                         </td>
                                         <td
-                                            class="text-xs md:text-sm px-6 py-3 whitespace-nowrap text-center"
+                                            class="text-xs md:text-sm px-2 py-3 whitespace-nowrap text-center"
                                         >
                                             <p
                                                 class="inline-block px-2 rounded-full h-auto justify-center items-center text-xs md:text-sm"
@@ -234,9 +242,9 @@ const deletePlace = (place) => {
                                         </td>
 
                                         <td
-                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                            class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            <!--                                             <button
+                                            <button
                                                 class="bg-green-500 text-white p-1 rounded-full hover:bg-green-600 cursor-pointer mr-1"
                                                 @click="addPhoto(place)"
                                             >
@@ -252,7 +260,7 @@ const deletePlace = (place) => {
                                                     name="md-modeedit-round"
                                                 />
                                             </button>
-                                            <button
+<!--                                             <button
                                                 class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500"
                                                 @click.prevent="deletePlace(place)"
                                             >

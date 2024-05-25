@@ -15,7 +15,7 @@ const props = defineProps({
 });
 
 const selection = ref("no");
-const selectedDepartment = ref("LAMBAYEQUE"); // Establecer Lambayeque como valor por defecto
+const selectedDepartment = ref("LAMBAYEQUE");
 const selectedProvince = ref(null);
 const provinces = ref([]);
 const districts = ref([]);
@@ -37,16 +37,26 @@ const form = useForm({
 });
 
 onMounted(() => {
-    const department = props.departments.find(d => d.name === "LAMBAYEQUE");
-    if (department) {
-        provinces.value = department.provinces;
-        if (props.place) {
-            selectedProvince.value = props.place.province;
-            const province = department.provinces.find(p => p.name === selectedProvince.value);
+    if (props.place && props.place.district) {
+        const department = props.departments.find(d => d.id === props.place.district.province.department_id);
+        if (department) {
+            selectedDepartment.value = department.name;
+            provinces.value = department.provinces;
+            const province = department.provinces.find(p => p.id === props.place.district.province_id);
             if (province) {
+                selectedProvince.value = province.name;
                 districts.value = province.districts;
-                selectedDistrict.value = props.place.district;
+                const district = districts.value.find(d => d.id === props.place.district_id);
+                if (district) {
+                    selectedDistrict.value = district.name;
+                }
             }
+        }
+    } else {
+        selectedDepartment.value = "LAMBAYEQUE";
+        const initialDepartment = props.departments.find(d => d.name === selectedDepartment.value);
+        if (initialDepartment) {
+            provinces.value = initialDepartment.provinces;
         }
     }
 });

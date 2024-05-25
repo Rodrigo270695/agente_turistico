@@ -35,9 +35,14 @@ class PlaceController extends Controller
         }
     }
 
-    public function update(Request $request, Place $place)
+    public function update(PlaceRequest $request, Place $lugare): RedirectResponse
     {
-        //
+        try {
+            $lugare->update($request->all());
+            return redirect()->route('lugares.index')->with('toast', ['Lugar actualizado exitosamente!', 'success']);
+        } catch (QueryException $e) {
+            return redirect()->back()->with('toast', ['Ocurrió un error al actualizar!', 'danger']);
+        }
     }
 
     /**
