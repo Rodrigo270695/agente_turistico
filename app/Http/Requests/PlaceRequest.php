@@ -19,8 +19,8 @@ class PlaceRequest extends FormRequest
     {
         return [
             'nombre' => [
-                'required', 'string', 'max:255', 'unique:places',
-                Rule::unique('places')->ignore($this->place ? $this->place->id : null),
+                'required', 'string', 'max:255',
+                Rule::unique('places')->ignore($this->lugare ? $this->lugare->id : null),
             ],
             'latitud' => 'required|numeric',
             'longitud' => 'required|numeric',

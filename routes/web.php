@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TypeCategoryController;
 use Illuminate\Foundation\Application;
@@ -55,5 +56,10 @@ Route::middleware([
     Route::get('lugares/search', [PlaceController::class, 'search' ])->name('lugares.search');
     Route::resource('lugares', PlaceController::class);
     Route::put('lugares/change/{place}', [PlaceController::class, 'change'])->name('lugares.change');
+    Route::get('lugares/{id}/photos', [PlaceController::class, 'photos'])->name('places.photos');
+    Route::get('lugares/{id}/prices', [PlaceController::class, 'prices'])->name('places.prices');
+    Route::resource('lugares/photos', PhotoController::class);
+    Route::resource('lugares/prices', PriceController::class);
+
 });
 

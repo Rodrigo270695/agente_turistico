@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PhotoRequest extends FormRequest
+class PriceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,8 +17,9 @@ class PhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => 'required',
-            'place_id' => 'required',
+            'tipo_persona' => 'required|string|max:50|unique_with:prices,place_id',
+            'precio' => 'required|numeric|min:0',
+            'place_id' => 'required|integer|exists:places,id',
         ];
     }
 }

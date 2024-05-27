@@ -4,7 +4,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { ref, defineProps } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
-import PlaceForm from './PlaceForm.vue';
+import PlaceForm from "./PlaceForm.vue";
 import Swal from "sweetalert2";
 
 let placeObj = ref(null);
@@ -15,10 +15,10 @@ const props = defineProps({
     departments: Array,
     subCategories: Array,
     places: Object,
-    text: String,
+    texto: String,
 });
 
-let query = ref(props.text);
+let query = ref(props.texto);
 
 const form = useForm({
     place: Object,
@@ -48,7 +48,7 @@ const closeModal = () => {
 const deletePlace = (place) => {
     Swal.fire({
         title: "¿Estás seguro?",
-        text: "¿De eliminar el lugar: " + place.name,
+        text: "¿De eliminar el lugar: " + place.nombre,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -57,12 +57,48 @@ const deletePlace = (place) => {
         cancelButtonText: "No, cancelar!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.delete(route("places.destroy", place), {
+            form.delete(route("lugares.destroy", place), {
                 preserveScroll: true,
             });
         }
     });
 };
+
+const changeStatus = (place) => {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¿Quieres cambiar el estado de la Categoría de " + place.nombre +"?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cambiar!",
+        cancelButtonText: "No, cancelar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.put(route("lugares.change", place), {
+                preserveScroll: true,
+            });
+        }
+    });
+};
+
+const search = () => {
+    form.get(route("lugares.search", { texto: query.value }));
+};
+
+const goToIndex = () => {
+    form.get(route("lugares.index"));
+};
+
+const goToPhotos = (placeId) => {
+    form.get(route("places.photos", { id: placeId }));
+};
+
+const goToPrices = (placeId) => {
+    form.get(route("places.prices", { id: placeId }));
+};
+
 </script>
 
 <template>
@@ -86,7 +122,7 @@ const deletePlace = (place) => {
                                 @keyup.enter="search"
                             />
                             <button
-                                @click.prevent="refresh"
+                                @click.prevent="goToIndex"
                                 class="absolute inset-y-0 right-0 px-3 flex items-center text-white bg-sky-900 rounded-e-md hover:bg-sky-800"
                             >
                                 <v-icon
@@ -161,18 +197,18 @@ const deletePlace = (place) => {
                                         <td
                                             class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            {{place.district.province.name}}/{{ place.district.name }}
+                                            {{
+                                                place.district.province.name
+                                            }}/{{ place.district.name }}
                                         </td>
                                         <td
                                             class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            {{place.nombre}}
+                                            {{ place.nombre }}
                                         </td>
                                         <td
                                             class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            {{ place.subcategory.typecategory.category
-                                                    .nombre }}/
                                             {{
                                                 place.subcategory.typecategory
                                                     .nombre
@@ -244,15 +280,23 @@ const deletePlace = (place) => {
                                         <td
                                             class="text-xs md:text-sm px-2 py-4 whitespace-nowrap"
                                         >
-                                            <button
-                                                class="bg-green-500 text-white p-1 rounded-full hover:bg-green-600 cursor-pointer mr-1"
-                                                @click="addPhoto(place)"
-                                            >
-                                                <v-icon
-                                                    name="md-addphotoalternate-round"
-                                                />
-                                            </button>
-                                            <button
+                                        <button
+                                            class="bg-sky-500 text-white p-1 rounded-full hover:bg-sky-600 cursor-pointer mr-1"
+                                            @click="goToPrices(place.id)"
+                                        >
+                                            <v-icon
+                                                name="md-pricecheck"
+                                            />
+                                        </button>
+                                        <button
+                                            class="bg-green-500 text-white p-1 rounded-full hover:bg-green-600 cursor-pointer mr-1"
+                                            @click="goToPhotos(place.id)"
+                                        >
+                                            <v-icon
+                                                name="md-addphotoalternate-round"
+                                            />
+                                        </button>
+                                        <button
                                                 class="bg-yellow-500 text-white p-1 rounded-full hover:bg-yellow-600 cursor-pointer mr-1"
                                                 @click="editPlace(place)"
                                             >
@@ -260,14 +304,33 @@ const deletePlace = (place) => {
                                                     name="md-modeedit-round"
                                                 />
                                             </button>
-<!--                                             <button
-                                                class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500"
-                                                @click.prevent="deletePlace(place)"
+                                            <button
+                                                class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500 mr-1"
+                                                @click.prevent="
+                                                    deletePlace(place)
+                                                "
+                                            >
+                                                <v-icon name="bi-trash" />
+                                            </button>
+                                            <button
+                                                class="text-white p-1 rounded-full"
+                                                :class="{
+                                                    'bg-orange-500 hover:bg-orange-400':
+                                                        place.estado == 1,
+                                                    'bg-green-500 hover:bg-green-400':
+                                                        place.estado == 0,
+                                                }"
+                                                @click="changeStatus(place)"
                                             >
                                                 <v-icon
-                                                    name="bi-trash"
+                                                    v-if="place.estado == 1"
+                                                    name="gi-cancel"
                                                 />
-                                            </button> -->
+                                                <v-icon
+                                                    v-else
+                                                    name="fa-check"
+                                                />
+                                            </button>
                                         </td>
                                     </tr>
                                     <tr v-if="places.data.length <= 0">
@@ -282,10 +345,15 @@ const deletePlace = (place) => {
                     </div>
 
                     <Modal :show="showModal" @close="showModal = false">
-                        <PlaceForm :subCategories="subCategories" :departments="departments" :place="placeObj" @close-modal="closeModal" />
+                        <PlaceForm
+                            :subCategories="subCategories"
+                            :departments="departments"
+                            :place="placeObj"
+                            @close-modal="closeModal"
+                        />
                     </Modal>
 
-<!--                     <Modal :show="photoModal" @close="photoModal = false">
+                    <!--                     <Modal :show="photoModal" @close="photoModal = false">
                         <UploadImage :place="placeObj" @close-modal="closeModal"/>
                     </Modal> -->
                 </div>
