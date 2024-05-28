@@ -2,12 +2,12 @@
 import { useForm } from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
     place: Object,
     price: Object,
 });
-
 
 const form = useForm({
     tipo_persona: '',
@@ -79,14 +79,14 @@ const tiposDePersona = [
                         />
                     </div>
                 </div>
-                <div class="flex justify-end">
-                    <button
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
-                        :disabled="form.processing"
-                    >
-                        Registrar
-                    </button>
-                </div>
+            </div>
+            <div class="flex justify-end">
+                <button
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md "
+                    :disabled="form.processing"
+                >
+                    Registrar
+                </button>
             </div>
         </div>
     </form>

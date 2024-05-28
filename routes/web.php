@@ -6,6 +6,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TypeCategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +61,10 @@ Route::middleware([
     Route::get('lugares/{id}/prices', [PlaceController::class, 'prices'])->name('places.prices');
     Route::resource('lugares/photos', PhotoController::class);
     Route::resource('lugares/prices', PriceController::class);
+
+    /* User */
+    Route::get('usuarios/search', [UserController::class, 'search' ])->name('usuarios.search');
+    Route::resource('usuarios', UserController::class);
 
 });
 

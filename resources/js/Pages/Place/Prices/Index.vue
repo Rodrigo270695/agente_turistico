@@ -47,15 +47,13 @@ const deletePrice = (price) => {
 const goToIndex = () => {
     form.get(route("lugares.index"));
 };
-
-
 </script>
 
 <template>
-    <AppLayout title="Fotos">
+    <AppLayout title="Precios">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Precio para 
+                Precios para
                 <strong class="text-sky-800 font-bold">{{
                     place.nombre
                 }}</strong>
@@ -90,18 +88,27 @@ const goToIndex = () => {
                             <div
                                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4"
                             >
-                                <div
+                            <div
                                     v-for="price in place.prices"
                                     :key="price.id"
-                                    class="relative card"
+                                    class="relative card transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl"
                                 >
-
-                                    <button
-                                        @click="deletePrice(price)"
-                                        class="absolute right-2 top-2 bg-red-400 hover:bg-red-500 text-white font-bold p-2 rounded-full"
-                                    >
-                                        <v-icon name="md-delete" />
-                                    </button>
+                                    <div class="p-4 bg-white border-2 border-gray-200 rounded-lg shadow-lg hover:shadow-md">
+                                        <h3 class="text-lg font-bold text-gray-800">
+                                            {{ price.tipo_persona }}
+                                        </h3>
+                                        <p class="text-gray-600">
+                                            S/. {{ price.precio.toFixed(2) }}
+                                        </p>
+                                        <div class="flex justify-end space-x-2 mt-4">
+                                            <button class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded inline-flex items-center" @click="deletePrice(price)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                                <span class="ml-2">Eliminar</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
