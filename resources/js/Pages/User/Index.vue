@@ -3,6 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { ref, defineProps } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import UserForm from "./UserForm.vue";
 import Modal from "@/Components/Modal.vue";
 import Swal from "sweetalert2";
 
@@ -10,7 +11,7 @@ let userObj = ref(null);
 let showModal = ref(false);
 
 const props = defineProps({
-    categories: Object,
+    users: Object,
     texto: String,
 });
 
@@ -34,7 +35,6 @@ const closeModal = () => {
     userObj.value = null;
     showModal.value = false;
 };
-
 
 const changeStatus = (user) => {
     Swal.fire({
@@ -62,7 +62,6 @@ const search = () => {
 const goToIndex = () => {
     form.get(route("usuarios.index"));
 };
-
 </script>
 
 <template>
@@ -115,55 +114,73 @@ const goToIndex = () => {
                                             scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
-                                            Nombre
+                                            Nombre Completo
                                         </th>
                                         <th
                                             scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
-                                            Estado
+                                            Dni
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Celular
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Email
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Roles
                                         </th>
                                         <th></th>
                                     </tr>
                                 </thead>
 
-<!--                                 <tbody
+                                <tbody
                                     class="bg-white divide-y divide-gray-200"
                                 >
                                     <tr
-                                        v-for="user in categories.data"
+                                        v-for="user in users.data"
                                         :key="user.id"
                                     >
                                         <td
                                             class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
                                         >
-                                            {{ user.nombre }}
+                                            {{ user.name }}
                                         </td>
                                         <td
-                                            class="text-xs md:text-sm px-6 py-3 whitespace-nowrap text-center"
+                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
                                         >
-                                            <p
-                                                class="inline-block px-2 rounded-full h-auto justify-center items-center text-xs md:text-sm"
-                                                :class="{
-                                                    ' bg-green-500 text-white':
-                                                        user.estado == 1,
-                                                    'bg-red-500 rounded text-white':
-                                                        user.estado == 0,
-                                                }"
-                                            >
-                                                {{
-                                                    user.estado == 1
-                                                        ? "ACTIVO"
-                                                        : "INACTIVO"
-                                                }}
-                                            </p>
+                                            {{ user.dni }}
+                                        </td>
+                                        <td
+                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                        >
+                                            {{ user.phone }}
+                                        </td>
+                                        <td
+                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                        >
+                                            {{ user.email }}
+                                        </td>
+                                        <td
+                                            class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
+                                        >
+                                            {{ user.roles[0].name }}
                                         </td>
 
                                         <td
                                             class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
                                         >
-
-                                            <button
+<!--                                             <button
                                                 class="bg-yellow-500 text-white p-1 rounded-full hover:bg-yellow-600 cursor-pointer mr-1"
                                                 @click="edituser(user)"
                                             >
@@ -172,50 +189,42 @@ const goToIndex = () => {
                                                 />
                                             </button>
                                             <button
-                                                            class="text-white p-1 rounded-full"
-                                                            :class="{
-                                                                'bg-orange-500 hover:bg-orange-400':
-                                                                    user.estado ==
-                                                                    1,
-                                                                'bg-green-500 hover:bg-green-400':
-                                                                    user.estado ==
-                                                                    0,
-                                                            }"
-                                                            @click="
-                                                                changeStatus(user)
-                                                            "
-                                                        >
-                                                            <v-icon
-                                                                v-if="
-                                                                    user.estado ==
-                                                                    1
-                                                                "
-                                                                name="gi-cancel"
-                                                            />
-                                                            <v-icon
-                                                                v-else
-                                                                name="fa-check"
-                                                            />
-                                                        </button>
+                                                class="text-white p-1 rounded-full"
+                                                :class="{
+                                                    'bg-orange-500 hover:bg-orange-400':
+                                                        user.estado == 1,
+                                                    'bg-green-500 hover:bg-green-400':
+                                                        user.estado == 0,
+                                                }"
+                                                @click="changeStatus(user)"
+                                            >
+                                                <v-icon
+                                                    v-if="user.estado == 1"
+                                                    name="gi-cancel"
+                                                />
+                                                <v-icon
+                                                    v-else
+                                                    name="fa-check"
+                                                />
+                                            </button> -->
                                         </td>
                                     </tr>
-                                    <tr v-if="categories.data.length <= 0">
+                                    <tr v-if="users.data.length <= 0">
                                         <td class="text-center" colspan="3">
                                             No hay registros
                                         </td>
                                     </tr>
-                                </tbody> -->
+                                </tbody>
                             </table>
                         </div>
-<!--                         <Pagination
+                        <Pagination
                             class="mt-2"
-                            :pagination="categories"
-                        /> -->
+                            :pagination="users"
+                        />
                     </div>
-<!--
                     <Modal :show="showModal" @close="showModal = false" maxWidth="xl">
-                        <UserForm  :category="userObj" @close-modal="closeModal" />
-                    </Modal> -->
+                        <UserForm :user="userObj" @close-modal="closeModal" />
+                    </Modal>
                 </div>
             </div>
         </div>
