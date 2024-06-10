@@ -55,6 +55,25 @@ const changeStatus = (user) => {
     });
 };
 
+const deleteUser = (user) => {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¿De eliminar el usuario: " + user.name,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar!",
+        cancelButtonText: "No, cancelar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route("usuarios.destroy", user), {
+                preserveScroll: true,
+            });
+        }
+    });
+};
+
 const search = () => {
     form.get(route("usuarios.search", { texto: query.value }));
 };
@@ -180,33 +199,22 @@ const goToIndex = () => {
                                         <td
                                             class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
                                         >
-<!--                                             <button
+                                            <button
                                                 class="bg-yellow-500 text-white p-1 rounded-full hover:bg-yellow-600 cursor-pointer mr-1"
-                                                @click="edituser(user)"
+                                                @click="editUser(user)"
                                             >
                                                 <v-icon
                                                     name="md-modeedit-round"
                                                 />
                                             </button>
                                             <button
-                                                class="text-white p-1 rounded-full"
-                                                :class="{
-                                                    'bg-orange-500 hover:bg-orange-400':
-                                                        user.estado == 1,
-                                                    'bg-green-500 hover:bg-green-400':
-                                                        user.estado == 0,
-                                                }"
-                                                @click="changeStatus(user)"
+                                                class="text-white p-1 rounded-full bg-red-400 hover:bg-red-500 mr-1"
+                                                @click.prevent="
+                                                    deleteUser(user)
+                                                "
                                             >
-                                                <v-icon
-                                                    v-if="user.estado == 1"
-                                                    name="gi-cancel"
-                                                />
-                                                <v-icon
-                                                    v-else
-                                                    name="fa-check"
-                                                />
-                                            </button> -->
+                                                <v-icon name="bi-trash" />
+                                            </button>
                                         </td>
                                     </tr>
                                     <tr v-if="users.data.length <= 0">
@@ -223,7 +231,7 @@ const goToIndex = () => {
                         />
                     </div>
                     <Modal :show="showModal" @close="showModal = false" maxWidth="xl">
-                        <UserForm :user="userObj" @close-modal="closeModal" />
+                        <UserForm :usuario="userObj" @close-modal="closeModal" />
                     </Modal>
                 </div>
             </div>

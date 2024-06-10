@@ -7,7 +7,7 @@ import { useForm } from "@inertiajs/vue3";
 import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
-    user: Object,
+    usuario: Object,
 });
 
 const roles = [
@@ -16,14 +16,14 @@ const roles = [
 ];
 
 const form = useForm({
-    id: props.user ? props.user.id : "",
-    name: props.user ? props.user.name : "",
-    last_name: props.user ? props.user.last_name : "",
-    dni: props.user ? props.user.dni : "",
-    phone: props.user ? props.user.phone : "",
-    address: props.user ? props.user.address : "",
-    email: props.user ? props.user.email : "",
-    role: props.user ? props.user.roles[0].name : "",
+    id: props.usuario ? props.usuario.id : "",
+    name: props.usuario ? props.usuario.name : "",
+    last_name: props.usuario ? props.usuario.last_name : "",
+    dni: props.usuario ? props.usuario.dni : "",
+    phone: props.usuario ? props.usuario.phone : "",
+    address: props.usuario ? props.usuario.address : "",
+    email: props.usuario ? props.usuario.email : "",
+    role: props.usuario ? props.usuario.roles[0].name : "",
 });
 
 const toTitleCase = (str) => {
@@ -33,8 +33,8 @@ const toTitleCase = (str) => {
 };
 
 const submit = () => {
-    if (props.user) {
-        form.put(route('usuarios.update', props.user), {
+    if (props.usuario) {
+        form.put(route('usuarios.update', props.usuario), {
             preserveScroll: true,
             onSuccess: () => emit('close-modal')
         });

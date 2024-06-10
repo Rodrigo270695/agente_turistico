@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_persona',50)->unique();
+            $table->string('tipo_persona',50);
             $table->float('precio');
             $table->unsignedBigInteger('place_id');
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');

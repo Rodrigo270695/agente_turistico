@@ -41,16 +41,29 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, User $usuario)
     {
-        //
+        try {
+            $usuario->update([
+                'name' => $request->name,
+                'last_name' => $request->last_name,
+                'dni' => $request->dni,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'email' => $request->email,
+            ]);
+
+            $usuario->syncRoles($request->role);
+
+            return redirect()->route('usuarios.index')->with('toast', ['Usuario actualizado exitosamente!', 'success']);
+        } catch (Exception $e) {
+            return redirect()->back()->with('toast', ['Ocurrió un error al actualizar el usuario!', 'danger']);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        User::findOrFail($id)->delete();
+        return redirect()->route('usuarios.index')->with('toast', ['Usuario eliminado exitosamente!', 'success']);
     }
 }
