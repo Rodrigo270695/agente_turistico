@@ -1,35 +1,26 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TypeCategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('about');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
+Route::get('/about', [WelcomeController::class, 'index'])->name('about');
+Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
+Route::get('/placesclient', [WelcomeController::class, 'places'])->name('places');
+Route::get('/placesclient/{id}', [WelcomeController::class, 'show'])->name('placesclient.show');
 
 
 Route::middleware([
@@ -66,5 +57,5 @@ Route::middleware([
     Route::get('usuarios/search', [UserController::class, 'search' ])->name('usuarios.search');
     Route::resource('usuarios', UserController::class);
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
-

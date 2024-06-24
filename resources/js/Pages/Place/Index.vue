@@ -13,7 +13,7 @@ let photoModal = ref(false);
 
 const props = defineProps({
     departments: Array,
-    subCategories: Array,
+    categories: Array,
     places: Object,
     texto: String,
 });
@@ -344,9 +344,9 @@ const goToPrices = (placeId) => {
                         </div>
                     </div>
 
-                    <Modal :show="showModal" @close="showModal = false">
+                    <Modal :show="showModal" @close="showModal = false" maxWidth="5xl">
                         <PlaceForm
-                            :subCategories="subCategories"
+                            :categories="categories"
                             :departments="departments"
                             :place="placeObj"
                             @close-modal="closeModal"

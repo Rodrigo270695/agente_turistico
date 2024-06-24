@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlaceRequest;
+use App\Models\Category;
 use App\Models\Department;
 use App\Models\Place;
 use App\Models\SubCategory;
@@ -19,9 +20,9 @@ class PlaceController extends Controller
     {
         $places = Place::with('subcategory.typecategory.category', 'district.province.department')->orderBy('id', 'desc')->paginate(7);
         $departments = Department::with(['provinces.districts'])->get();
-        $subCategories = SubCategory::with('typecategory.category')->where('estado', 1)->orderBy('nombre', 'asc')->get();
+        $categories = Category::with('typecategories.subcategories')->where('estado', 1)->orderBy('nombre', 'asc')->get();
 
-        return Inertia::render('Place/Index', compact('places', 'departments', 'subCategories'));
+        return Inertia::render('Place/Index', compact('places', 'departments', 'categories'));
     }
 
     public function store(PlaceRequest $request): RedirectResponse

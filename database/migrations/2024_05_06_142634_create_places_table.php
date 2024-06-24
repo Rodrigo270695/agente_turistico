@@ -21,6 +21,10 @@ return new class extends Migration
             $table->time('hora_apertura');
             $table->time('hora_cierre');
             $table->string('direccion',200);
+            $table->time('distancia_horas');
+            $table->decimal('distancia_km', 10, 2);
+            $table->string('epoca_visita',50);
+            $table->char('entrada',1);
             $table->string('tipo_acceso',15);
             $table->boolean('estado')->default(true);
             $table->foreignId('district_id')->constrained('districts');
