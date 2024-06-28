@@ -20,7 +20,7 @@ return new class extends Migration
             ->on('provinces')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

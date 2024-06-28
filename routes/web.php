@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/about', [WelcomeController::class, 'index'])->name('about');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
 Route::get('/placesclient', [WelcomeController::class, 'places'])->name('places');
+Route::get('/placesclient/search', [WelcomeController::class, 'search'])->name('placesclient.search');
 Route::get('/placesclient/{id}', [WelcomeController::class, 'show'])->name('placesclient.show');
 
 

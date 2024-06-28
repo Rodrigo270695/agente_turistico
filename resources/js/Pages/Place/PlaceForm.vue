@@ -22,7 +22,7 @@ const districts = ref([]);
 const selectedDistrict = ref(null);
 const selectedCategory = ref(null);
 const typeCategories = ref([]);
-const selectedTypeCategory = ref(null);
+const selectedTypeCategory = ref(null); 
 const subCategories = ref([]);
 
 const form = useForm({
@@ -45,6 +45,7 @@ const form = useForm({
 });
 
 onMounted(() => {
+    console.log("props.place:", props.place);
     if (props.place && props.place.district) {
         const department = props.departments.find(d => d.id === props.place.district.province.department_id);
         if (department) {
@@ -67,12 +68,15 @@ onMounted(() => {
             provinces.value = initialDepartment.provinces;
         }
     }
-    if (props.place && props.place.sub_category) {
-        const category = props.categories.find(c => c.id === props.place.sub_category.typecategory.category_id);
+
+    if (props.place && props.place.subcategory) {
+        const category = props.categories.find(c => c.id === props.place.subcategory.typecategory.category.id);
+        console.log("category:", category);
         if (category) {
             selectedCategory.value = category.id;
             typeCategories.value = category.typecategories;
-            const typeCategory = category.typecategories.find(tc => tc.id === props.place.sub_category.type_category_id);
+            const typeCategory = category.typecategories.find(tc => tc.id === props.place.subcategory.type_category_id);
+            console.log("typeCategory:", typeCategory);
             if (typeCategory) {
                 selectedTypeCategory.value = typeCategory.id;
                 subCategories.value = typeCategory.subcategories;
@@ -211,9 +215,9 @@ const access = [
     { id: 2, name: "PARCIAL" },
 ];
 const entradas = [
-    { id: 'P', name: "P" },
-    { id: 'L', name: "L" },
-    { id: 'R', name: "R" },
+    { id: 'P', name: "Pagado" },
+    { id: 'L', name: "Libre" },
+    { id: 'R', name: "Restringido" },
 ];
 
 const days = [

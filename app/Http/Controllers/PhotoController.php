@@ -15,17 +15,18 @@ class PhotoController extends Controller
     public function store(PhotoRequest $request)
     {
         try {
-            $image = $request->file('url')->store('photos', 'public');
-            $url = Storage::url($image);
-            Photo::create([
-                'url' => $url,
-                'place_id' => $request->place_id
-            ]);
+            foreach ($request->file('urls') as $file) {
+                $image = $file->store('photos', 'public');
+                $url = Storage::url($image);
+                Photo::create([
+                    'url' => $url,
+                    'place_id' => $request->place_id
+                ]);
+            }
 
-            return redirect()->route("places.photos", $request->place_id)->with('toast', ['Foto registrada exitosamente!', 'success']);
-
+            return redirect()->route("places.photos", $request->place_id)->with('toast', ['Fotos registradas exitosamente!', 'success']);
         } catch (Exception $e) {
-            return redirect()->route("places.photos", $request->place_id)->with('toast', ['Error al registrar la foto!', 'error']);
+            return redirect()->route("places.photos", $request->place_id)->with('toast', ['Error al registrar las fotos!', 'error']);
         }
     }
     public function destroy(Photo $photo)

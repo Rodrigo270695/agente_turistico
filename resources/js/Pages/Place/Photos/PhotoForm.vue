@@ -10,12 +10,12 @@ const props = defineProps({
 
 
 const form = useForm({
-    url: '',
+    urls: [],
     place_id: props.place.id,
 });
 
 const onFileChange = (event) => {
-    form.url = event.target.files[0];
+    form.urls = Array.from(event.target.files);
 };
 
 const submit = () => {
@@ -47,6 +47,7 @@ const emit = defineEmits(["close-modal"]);
                             @change="onFileChange"
                             ref="image"
                             accept="image/*"
+                            multiple
                         />
                         <InputError
                             class="w-full"
