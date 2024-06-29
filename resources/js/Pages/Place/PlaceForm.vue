@@ -22,7 +22,7 @@ const districts = ref([]);
 const selectedDistrict = ref(null);
 const selectedCategory = ref(null);
 const typeCategories = ref([]);
-const selectedTypeCategory = ref(null); 
+const selectedTypeCategory = ref(null);
 const subCategories = ref([]);
 
 const form = useForm({
@@ -384,13 +384,13 @@ const updateDistance = (newDistance) => {
 
                     <div >
                         <InputLabel value="Latitud" />
-                        <TextInput class="w-full" v-model="form.latitud" readonly />
+                        <TextInput class="w-full" v-model="form.latitud" />
                         <InputError class="w-full" :message="form.errors.latitud" />
                     </div>
 
                     <div>
                         <InputLabel value="Longitud" />
-                        <TextInput class="w-full" v-model="form.longitud" readonly/>
+                        <TextInput class="w-full" v-model="form.longitud"/>
                         <InputError class="w-full" :message="form.errors.longitud" />
                     </div>
 

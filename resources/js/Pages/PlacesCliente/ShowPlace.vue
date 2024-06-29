@@ -55,9 +55,36 @@ defineProps({
                         <img :src="recommendedPlace.photos.length ? recommendedPlace.photos[0].url : '/path/to/default-image.jpg'" :alt="recommendedPlace.nombre" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-[#64161d] mb-2">{{ recommendedPlace.nombre }}</h3>
-                            <p class="text-gray-600 mb-2"><strong>Provincia/Distrito:</strong> {{ recommendedPlace.district.province.name }} / {{ recommendedPlace.district.name }}</p>
-                            <p class="text-gray-600 mb-2"><strong>Época de visita:</strong> {{ recommendedPlace.epoca_visita }}</p>
-                            <p class="text-gray-600 mb-2"><strong>Dirección:</strong> {{ recommendedPlace.direccion }}</p>
+                            <p class="text-gray-600 mb-2">
+                            <strong>Ubicación: </strong>
+                            {{ place.district.province.name }} /
+                            {{ place.district.name }}
+                        </p>
+                        <p class="text-gray-600 mb-2">
+                            <strong>Época de visita:</strong>
+                            {{ place.epoca_visita }}
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Días abierto:</strong>
+                            {{ place.dias_abierto_desde }} -
+                            {{ place.dias_cerrado_hasta }}
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Distancia: </strong>
+                            {{ place.distancia_horas }} horas
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>LLegada: </strong> {{ place.tipo_acceso }}
+                            <v-icon
+                                class="text-[#64161d]"
+                                name="ri-footprint-fill"
+                            />
+                            <v-icon
+                                v-if="place.tipo_acceso == 'total'"
+                                class="text-[#64161d]"
+                                name="fa-car-side"
+                            />
+                        </p>
                             <Link :href="route('placesclient.show', recommendedPlace.id)" class="inline-block bg-[#64161d] text-white py-2 px-4 rounded-md hover:bg-[#e8a860]">Ver Detalles</Link>
                         </div>
                     </div>
