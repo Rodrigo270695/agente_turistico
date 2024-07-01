@@ -33,4 +33,9 @@ class Place extends Model
     {
         return $this->hasMany(Price::class);
     }
+
+    public function visits(): HasMany
+    {
+        return $this->hasMany(Visit::class);
+    }
 }

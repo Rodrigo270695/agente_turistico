@@ -8,6 +8,7 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TypeCategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,8 @@ Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
 Route::get('/placesclient', [WelcomeController::class, 'places'])->name('places');
 Route::get('/placesclient/search', [WelcomeController::class, 'search'])->name('placesclient.search');
 Route::get('/placesclient/{id}', [WelcomeController::class, 'show'])->name('placesclient.show');
-
+Route::post('/visits', [VisitController::class, 'store'])->name('visit.store');
+Route::get('/visits', [VisitController::class, 'index'])->name('visits.index');
 
 Route::middleware([
     'auth:sanctum',
@@ -59,4 +61,5 @@ Route::middleware([
     Route::resource('usuarios', UserController::class);
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 });
