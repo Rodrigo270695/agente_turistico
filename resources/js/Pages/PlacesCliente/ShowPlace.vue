@@ -2,7 +2,7 @@
 import { defineProps, defineEmits } from 'vue';
 import Layout from '../Layout.vue';
 import MapComponent from '@/Components/MapComponent.vue';
-import { useForm, Head } from "@inertiajs/vue3";
+import { useForm, Head, Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     place: Object,
