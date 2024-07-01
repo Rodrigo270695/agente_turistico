@@ -4,8 +4,7 @@
         <nav class="bg-[#64161d] text-white">
             <div class=" mx-20 flex justify-between items-center p-4">
                 <div class="flex items-center">
-                    <img src="/path/to/logo.png" alt="Logo" class="h-8 mr-2">
-                    <span class="text-xl font-bold">Logo</span>
+                    <img src="logo.png" alt="Logo" class="h-8 mr-2">
                 </div>
                 <div class="flex items-center space-x-4">
                     <Link :href="route('about')" class="hover:text-[#e8a860]" :class="{ 'text-[#e8a860]': activePage === 'about' }">Sobre Nosotros</Link>
