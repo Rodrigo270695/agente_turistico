@@ -24,7 +24,7 @@ const submit = () => {
     if (props.category) {
         form.put(route('categorias.update', props.category), {
             preserveScroll: true,
-            onSuccess: () => emit('close-modal') 
+            onSuccess: () => emit('close-modal')
         });
     } else {
         form.post(route("categorias.store"), {
@@ -47,7 +47,10 @@ const emit = defineEmits(["close-modal"]);
             <div class="mb-4">
                 <div class="grid grid-cols-6 gap-3">
                     <div class="col-span-6 sm:col-span-6">
-                        <InputLabel value="Nombre" />
+                        <div class="flex">
+                            <InputLabel value="Nombre" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput
                             class="w-full"
                             v-model="form.nombre"

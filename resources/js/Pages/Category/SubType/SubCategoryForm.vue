@@ -50,7 +50,10 @@ const emit = defineEmits(["close-modal"]);
             <div class="mb-4">
                 <div class="grid grid-cols-6 gap-3">
                     <div class="col-span-6 sm:col-span-6">
-                        <InputLabel value="Tipo Categoría" />
+                        <div class="flex">
+                            <InputLabel value="Tipo Categoría" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select
                             id="select"
                             v-model="form.type_category_id"
@@ -73,7 +76,10 @@ const emit = defineEmits(["close-modal"]);
                         />
                     </div>
                     <div class="col-span-6 sm:col-span-6">
-                        <InputLabel value="Nombre" />
+                        <div class="flex">
+                            <InputLabel value="Nombre" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput
                             class="w-full"
                             v-model="form.nombre"

@@ -30,9 +30,9 @@ class UserController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'email' => $request->email,
-                'password' => Hash::make($request->role),
+                'password' => Hash::make('admin'),
             ]);
-            $user->assignRole($request->role);
+            $user->assignRole('admin');
 
             return redirect()->route('usuarios.index')->with('toast', ['Usuario creado exitosamente!', 'success']);
         } catch (Exception $e) {
@@ -53,7 +53,7 @@ class UserController extends Controller
                 'email' => $request->email,
             ]);
 
-            $usuario->syncRoles($request->role);
+            $usuario->syncRoles('admin');
 
             return redirect()->route('usuarios.index')->with('toast', ['Usuario actualizado exitosamente!', 'success']);
         } catch (Exception $e) {

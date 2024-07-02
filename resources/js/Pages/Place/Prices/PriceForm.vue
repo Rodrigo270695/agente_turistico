@@ -26,7 +26,7 @@ const emit = defineEmits(["close-modal"]);
 
 const tiposDePersona = [
     { id: 1, nombre: 'Estudiante' },
-    { id: 2, nombre: 'Niño' },
+    { id: 2, nombre: 'Adulto' },
     { id: 3, nombre: 'Preferencial' }
 ];
 

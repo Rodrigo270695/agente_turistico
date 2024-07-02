@@ -35,7 +35,6 @@ class UserRequest extends FormRequest
             'last_name' => 'required|string|max:50',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
-            'role' => 'required|exists:roles,name',
         ];
     }
 }

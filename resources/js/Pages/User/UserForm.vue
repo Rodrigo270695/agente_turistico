@@ -58,29 +58,6 @@ const emit = defineEmits(["close-modal"]);
             </div>
             <div class="mb-4">
                 <div class="grid grid-cols-6 gap-3">
-                    <div class="col-span-6 sm:col-span-6">
-                        <InputLabel value="Rol" />
-                        <select
-                            id="select"
-                            v-model="form.role"
-                            class="bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            <option disabled selected value="">
-                                Seleccione un rol
-                            </option>
-                            <option
-                                v-for="role in roles"
-                                :key="role.id"
-                                :value="role.id"
-                            >
-                                {{ role.nombre }}
-                            </option>
-                        </select>
-                        <InputError
-                            class="w-full"
-                            :message="form.errors.role"
-                        />
-                    </div>
                     <div class="col-span-6 sm:col-span-3">
                         <InputLabel value="Nombres" />
                         <TextInput

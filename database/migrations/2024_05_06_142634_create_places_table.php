@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('dias_cerrado_hasta', ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
             $table->time('hora_apertura');
             $table->time('hora_cierre');
-            $table->string('direccion',200);
+            $table->string('direccion',200)->nullable();
             $table->time('distancia_horas');
             $table->decimal('distancia_km', 10, 2);
             $table->string('epoca_visita',50);

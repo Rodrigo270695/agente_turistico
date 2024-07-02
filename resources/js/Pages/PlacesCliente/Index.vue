@@ -170,6 +170,7 @@ const goToIndex = () => {
                             <InputLabel class="text-left" value="Distrito" />
                             <select
                                 v-model="selectedDistrict"
+                                :disabled="!selectedProvince"
                                 class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                             >
                                 <option disabled selected value="">
@@ -202,10 +203,12 @@ const goToIndex = () => {
                                 </option>
                             </select>
                         </div>
-                        <div>
+                        <div >
                             <InputLabel class="text-left" value="Tipo" />
+
                             <select
                                 v-model="selectedTypeCategory"
+                                :disabled="!selectedCategory"
                                 class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                             >
                                 <option disabled selected value="">
@@ -308,11 +311,11 @@ const goToIndex = () => {
                         <p class="text-gray-600 mb-4">
                             <strong>LLegada: </strong> {{ place.tipo_acceso }}
                             <v-icon
+                                v-if="place.tipo_acceso == 'PARCIAL'"
                                 class="text-[#64161d]"
                                 name="ri-footprint-fill"
                             />
                             <v-icon
-                                v-if="place.tipo_acceso == 'total'"
                                 class="text-[#64161d]"
                                 name="fa-car-side"
                             />

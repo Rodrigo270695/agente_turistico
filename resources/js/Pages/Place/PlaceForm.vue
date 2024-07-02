@@ -260,7 +260,10 @@ const updateDistance = (newDistance) => {
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
                     <div>
-                        <InputLabel value="Provincia" />
+                        <div class="flex">
+                            <InputLabel value="Provincia" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="selectedProvince" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione un opción</option>
                             <option v-for="province in provinces" :key="province.id" :value="province.name">{{ province.name }}</option>
@@ -269,7 +272,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div>
-                        <InputLabel value="Distrito" />
+                        <div class="flex">
+                            <InputLabel value="Distrito" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="form.district_id" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione un opción</option>
                             <option v-for="district in districts" :key="district.id" :value="district.id">{{ district.name }}</option>
@@ -278,13 +284,19 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div>
-                        <InputLabel value="Nombre" />
+                        <div class="flex">
+                            <InputLabel value="Nombre" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.nombre" @input="form.nombre = toTitleCase(form.nombre)" />
                         <InputError class="w-full" :message="form.errors.nombre" />
                     </div>
 
                     <div>
-                        <InputLabel value="Categoría" />
+                        <div class="flex">
+                            <InputLabel value="Categoría" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="selectedCategory" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione una opción</option>
                             <option v-for="category in props.categories" :key="category.id" :value="category.id">{{ category.nombre }}</option>
@@ -293,7 +305,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div>
-                        <InputLabel value="Tipo de Categoría" />
+                        <div class="flex">
+                            <InputLabel value="Tipo de Categoría" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="selectedTypeCategory" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione una opción</option>
                             <option v-for="typeCategory in typeCategories" :key="typeCategory.id" :value="typeCategory.id">{{ typeCategory.nombre }}</option>
@@ -302,7 +317,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div>
-                        <InputLabel value="Subcategoría" />
+                        <div class="flex">
+                            <InputLabel value="Subcategoría" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="form.sub_category_id" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione una opción</option>
                             <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.id">{{ subCategory.nombre }}</option>
@@ -316,22 +334,34 @@ const updateDistance = (newDistance) => {
                         <InputError class="w-full" :message="form.errors.direccion" />
                     </div>
                     <div class="sm:col-span-1">
-                        <InputLabel value="Distancia (Horas)" />
+                        <div class="flex">
+                            <InputLabel value="Distancia (Horas)" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.distancia_horas" type="time" />
                         <InputError class="w-full" :message="form.errors.distancia_horas" />
                     </div>
                     <div class="sm:col-span-1">
-                        <InputLabel value="Distancia (Km)" />
+                        <div class="flex">
+                            <InputLabel value="Distancia (Km)" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.distancia_km" />
                         <InputError class="w-full" :message="form.errors.distancia_km" />
                     </div>
                     <div class="sm:col-span-1">
-                        <InputLabel value="Epoca de visita" />
+                        <div class="flex">
+                            <InputLabel value="Epoca de visita" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.epoca_visita" />
                         <InputError class="w-full" :message="form.errors.epoca_visita" />
                     </div>
                     <div class="sm:col-span-1">
-                        <InputLabel value="Entrada" />
+                        <div class="flex">
+                            <InputLabel value="Entrada" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="form.entrada" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione un opción</option>
                             <option v-for="(ent,index) in entradas" :key="index" :value="ent.id">{{ ent.name }}</option>
@@ -340,7 +370,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div class="sm:col-span-2">
-                        <InputLabel value="Días de atención" />
+                        <div class="flex">
+                            <InputLabel value="Días de atención" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <select v-model="form.dias_abierto_desde" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
@@ -360,7 +393,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div class="">
-                        <InputLabel value="Horario de atención" />
+                        <div class="flex">
+                            <InputLabel value="Horario de atención" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <TextInput type="time" class="w-full" v-model="form.hora_apertura" />
@@ -374,7 +410,10 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div>
-                        <InputLabel value="Acceso" />
+                        <div class="flex">
+                            <InputLabel value="Acceso" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <select v-model="form.tipo_acceso" class="w-full bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                             <option disabled selected value="">Seleccione un opción</option>
                             <option v-for="dato in access" :key="dato.id" :value="dato.name">{{ dato.name }}</option>
@@ -383,13 +422,19 @@ const updateDistance = (newDistance) => {
                     </div>
 
                     <div >
-                        <InputLabel value="Latitud" />
+                        <div class="flex">
+                            <InputLabel value="Latitud" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.latitud" />
                         <InputError class="w-full" :message="form.errors.latitud" />
                     </div>
 
                     <div>
-                        <InputLabel value="Longitud" />
+                        <div class="flex">
+                            <InputLabel value="Longitud" />
+                            <span class="text-red-500 text-lg">*</span>
+                        </div>
                         <TextInput class="w-full" v-model="form.longitud"/>
                         <InputError class="w-full" :message="form.errors.longitud" />
                     </div>
