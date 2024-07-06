@@ -78,7 +78,7 @@ class PlaceController extends Controller
             $estado = 0;
         }
 
-        $places = Place::query()
+        $places = Place::with('subcategory.typecategory.category', 'district.province.department')
             ->select('places.*')
             ->join('districts', 'places.district_id', '=', 'districts.id')
             ->join('provinces', 'districts.province_id', '=', 'provinces.id')

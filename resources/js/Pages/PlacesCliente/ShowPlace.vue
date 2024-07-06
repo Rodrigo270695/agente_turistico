@@ -94,7 +94,7 @@ const visitPlace = () => {
                                 name="ri-footprint-fill"
                             />
                             <v-icon
-                                v-if="recommendedPlace.tipo_acceso == 'total'"
+                                v-if="recommendedPlace.tipo_acceso == 'TOTAL'"
                                 class="text-[#64161d]"
                                 name="fa-car-side"
                             />
