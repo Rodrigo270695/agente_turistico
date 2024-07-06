@@ -193,7 +193,7 @@ const goToIndex = () => {
                                         <td
                                             class="text-xs md:text-sm px-6 py-4 whitespace-nowrap"
                                         >
-                                            {{ user.roles[0].name }}
+                                            {{ user.roles[0]?.name }}
                                         </td>
 
                                         <td

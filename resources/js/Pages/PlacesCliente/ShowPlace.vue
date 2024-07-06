@@ -90,11 +90,11 @@ const visitPlace = () => {
                         <p class="text-gray-600 mb-4">
                             <strong>LLegada: </strong> {{ recommendedPlace.tipo_acceso }}
                             <v-icon
+                                v-if="place.tipo_acceso == 'PARCIAL'"
                                 class="text-[#64161d]"
                                 name="ri-footprint-fill"
                             />
                             <v-icon
-                                v-if="recommendedPlace.tipo_acceso == 'TOTAL'"
                                 class="text-[#64161d]"
                                 name="fa-car-side"
                             />
