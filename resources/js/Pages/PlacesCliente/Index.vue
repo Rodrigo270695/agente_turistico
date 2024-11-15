@@ -271,62 +271,122 @@ const goToIndex = () => {
             <h2 class="text-2xl font-bold text-center mb-8 text-[#64161d]">
                 Centros Turísticos
             </h2>
+            <!-- Leyenda de Llegada -->
+            <div class="mt-8 p-4 bg-gradient-to-r from-blue-100 to-blue-200 rounded-md shadow-sm">
+                <h3 class="text-md font-semibold mb-2 text-blue-800 flex items-center">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12.9A9 9 0 1112.9 3 9 9 0 0121 12.9z"></path>
+                    </svg>
+                    Leyenda de Llegada
+                </h3>
+                <ul class="list-none pl-0 text-gray-700 space-y-1">
+                    <li class="flex items-center">
+                        <span class="bg-green-200 text-green-800 rounded-full px-2 py-0.5 mr-2 text-sm">TOTAL</span>
+                        <span class="text-sm">Acceso completo sin restricciones.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="bg-yellow-200 text-yellow-800 rounded-full px-2 py-0.5 mr-2 text-sm">PARCIAL</span>
+                        <span class="text-sm">Acceso restringido; puede requerir caminar un poco más.</span>
+                    </li>
+                </ul>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div
-                    v-for="place in places.data"
-                    :key="place.id"
-                    class="bg-white rounded-lg shadow-lg overflow-hidden"
-                >
-                    <img
-                        :src="
-                            place.photos && place.photos.length
-                                ? place.photos[0].url
-                                : '/path/to/default-image.jpg'
-                        "
-                        :alt="place.nombre"
-                        class="w-full h-48 object-cover"
-                    />
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold text-[#64161d] mb-2">
-                            {{ place.nombre }}
-                        </h3>
-                        <p class="text-gray-600 mb-2">
-                            <strong>Ubicación: </strong>
-                            {{ place.district.province.name }} /
-                            {{ place.district.name }}
-                        </p>
-                        <p class="text-gray-600 mb-2">
-                            <strong>Época de visita:</strong>
-                            {{ place.epoca_visita }}
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            <strong>Días abierto:</strong>
-                            {{ place.dias_abierto_desde }} -
-                            {{ place.dias_cerrado_hasta }}
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            <strong>Distancia: </strong>
-                            {{ place.distancia_horas }} horas
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            <strong>LLegada: </strong> {{ place.tipo_acceso }}
-                            <v-icon
-                                v-if="place.tipo_acceso == 'PARCIAL'"
-                                class="text-[#64161d]"
-                                name="ri-footprint-fill"
-                            />
-                            <v-icon
-                                class="text-[#64161d]"
-                                name="fa-car-side"
-                            />
-                        </p>
-                        <Link
-                            :href="route('placesclient.show', place.id)"
-                            class="inline-block bg-[#64161d] text-white py-2 px-4 rounded-md hover:bg-[#e8a860]"
-                            >Ver Detalles</Link
-                        >
+        v-for="place in places.data"
+        :key="place.id"
+        class="bg-white rounded-lg shadow-lg overflow-hidden"
+    >
+        <img
+            :src="
+                place.photos && place.photos.length
+                    ? place.photos[0].url
+                    : '/path/to/default-image.jpg'
+            "
+            :alt="place.nombre"
+            class="w-full h-48 object-cover"
+        />
+        <div class="p-6">
+            <h3 class="text-2xl font-bold text-[#64161d] mb-2">
+                {{ place.nombre }}
+            </h3>
+            <p class="text-gray-600 mb-2 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                </svg>
+                <strong>Ubicación: </strong>
+                {{ place.district.province.name }} /
+                {{ place.district.name }}
+            </p>
+            <p class="text-gray-600 mb-2 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13z"/>
+                </svg>
+                <strong>Época de visita:</strong>
+                {{ place.epoca_visita }}
+            </p>
+            <p class="text-gray-600 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 11h-8V4H4v16h16V11zm-2 9H6V6h6v5h6v9z"/>
+                </svg>
+                <strong>Días abierto:</strong>
+                {{ place.dias_abierto_desde }} -
+                {{ place.dias_cerrado_hasta }}
+            </p>
+            <p class="text-gray-600 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M3 21l18-18" />
+                </svg>
+                <strong>Distancia: </strong>
+                {{ place.distancia_horas }} horas
+            </p>
+            <template v-if="place.prices.length > 0">
+                <p class="text-gray-600 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <strong>Precio: </strong>
+                    <div class="flex space-x-4">
+                        <template v-for="price in place.prices" :key="price.id">
+                            <span v-if="price.tipo_persona === 'Adulto'">
+                                Adulto: S/. {{ price.precio }}
+                            </span>
+                            <span v-if="price.tipo_persona === 'Estudiante'">
+                                Estudiante: S/. {{ price.precio }}
+                            </span>
+                            <span v-if="price.tipo_persona === 'Preferencial'">
+                                Preferencial: S/. {{ price.precio }}
+                            </span>
+                        </template>
                     </div>
-                </div>
+                </p>
+            </template>
+            <template v-else>
+                <p class="text-gray-600 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <strong>Precio: </strong>Gratis
+                </p>
+            </template>
+            <p class="text-gray-600 mb-4">
+                <strong>LLegada: </strong> {{ place.tipo_acceso }}
+                <v-icon
+                    v-if="place.tipo_acceso == 'PARCIAL'"
+                    class="text-[#64161d]"
+                    name="ri-footprint-fill"
+                />
+                <v-icon
+                    class="text-[#64161d]"
+                    name="fa-car-side"
+                />
+            </p>
+            <Link
+                :href="route('placesclient.show', place.id)"
+                class="inline-block bg-[#64161d] text-white py-2 px-4 rounded-md hover:bg-[#e8a860]"
+                >Ver Detalles</Link
+            >
+        </div>
+    </div>
             </div>
             <Pagination class="mt-6" :pagination="places" />
         </div>
