@@ -23,4 +23,8 @@ class District extends Model
         return $this->hasMany(Place::class);
     }
 
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }

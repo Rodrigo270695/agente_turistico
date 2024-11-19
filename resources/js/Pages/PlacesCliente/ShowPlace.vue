@@ -243,13 +243,13 @@ const closeModal = () => {
             </div>
         </div>
 
-    <!-- Modal para mostrar la imagen en grande -->
-    <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-0 rounded-lg shadow-lg relative z-60">
-            <button @click="closeModal" class="absolute top-2 right-2 text-white bg-red-500 rounded-md p-1">X</button>
-            <img :src="selectedImage" alt="Imagen grande" class="max-w-full max-h-screen">
+        <!-- Modal para mostrar la imagen en grande -->
+        <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-0 rounded-lg shadow-lg relative z-60">
+                <button @click="closeModal" class="absolute top-2 right-2 text-white bg-red-500 rounded-md p-1">X</button>
+                <img :src="selectedImage" alt="Imagen grande" class="max-w-full max-h-screen">
+            </div>
         </div>
-    </div>
     </Layout>
 </template>
 

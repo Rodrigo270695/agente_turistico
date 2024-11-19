@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Department;
+use App\Models\News;
 use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -16,16 +17,29 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('About');
+        $news = News::with('district.province.department')->where('estado', 1)->orderBy('created_at', 'desc')->get();
+        return Inertia::render('About', compact('news'));
     }
 
     public function places()
     {
-        $places = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos','prices')->where('estado', 1)->orderBy('created_at', 'desc')->paginate(15);
+        $places = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->where('estado', 1)->orderBy('created_at', 'desc')->paginate(15);
         $departments = Department::with(['provinces.districts'])->get();
         $categories = Category::with('typecategories')->where('estado', 1)->orderBy('nombre', 'asc')->get();
 
-        return Inertia::render('PlacesCliente/Index', compact('places', 'departments', 'categories'));
+        $user = auth()->user();
+        if ($user) {
+            $lastVisit = $user->visits()->orderBy('created_at', 'desc')->first();
+            if ($lastVisit) {
+                $lastPlaceId = $lastVisit->place_id;
+                $recommendations = Http::get('http://127.0.0.1:5000/recomendaciones/' . $lastPlaceId)->json();
+                $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->whereIn('id', $recommendations['recomendaciones'])->get();
+            }
+        } else {
+            $recommendedPlaces = collect();
+        }
+
+        return Inertia::render('PlacesCliente/Index', compact('places', 'departments', 'categories', 'recommendedPlaces'));
     }
     /**
      * Show the form for creating a new resource.
@@ -57,14 +71,14 @@ class WelcomeController extends Controller
         $recommendations = $response->json();
 
         // Obtener los productos recomendados
-        $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos','prices')->whereIn('id', $recommendations['recomendaciones'])->get();
+        $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->whereIn('id', $recommendations['recomendaciones'])->get();
 
         return Inertia::render('PlacesCliente/ShowPlace', compact('place', 'recommendedPlaces'));
     }
 
     public function search(Request $request)
     {
-        $query = Place::query()->with('subcategory.typecategory.category', 'district.province.department', 'photos','prices');
+        $query = Place::query()->with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices');
 
         if ($request->filled('nombre')) {
             $query->where('places.nombre', 'like', '%' . $request->nombre . '%');
@@ -113,5 +127,4 @@ class WelcomeController extends Controller
             'searchParams' => $request->all(), // Añadir los parámetros de búsqueda
         ]);
     }
-
 }

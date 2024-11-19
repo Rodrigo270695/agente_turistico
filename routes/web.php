@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\PriceController;
@@ -61,5 +62,10 @@ Route::middleware([
     Route::resource('usuarios', UserController::class);
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    /* Noticias */
+    Route::get('noticias/search', [NewsController::class, 'search' ])->name('noticias.search');
+    Route::resource('noticias', NewsController::class);
+    Route::put('noticias/change/{news}', [NewsController::class, 'change'])->name('noticias.change');
 
 });

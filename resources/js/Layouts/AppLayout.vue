@@ -63,8 +63,11 @@ const logout = () => {
                                 <NavLink :href="route('subcategorias.index')" :active="route().current('subcategorias.index')">
                                     Sub Tipos
                                 </NavLink>
-                                <NavLink :href="route('lugares.index')" :active="route().current('lugares.index')">
-                                    Lugares
+                                    <NavLink :href="route('lugares.index')" :active="route().current('lugares.index')">
+                                        Lugares
+                                    </NavLink>
+                                <NavLink :href="route('noticias.index')" :active="route().current('noticias.index')">
+                                    Noticias
                                 </NavLink>
                                 <NavLink :href="route('usuarios.index')" :active="route().current('usuarios.index')">
                                     Usuarios
@@ -223,6 +226,9 @@ const logout = () => {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('lugares.index')" :active="route().current('lugares.index')">
                             Lugares
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('noticias.index')" :active="route().current('noticias.index')">
+                            Noticias
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('usuarios.index')" :active="route().current('usuarios.index')">
                             Usuarios
