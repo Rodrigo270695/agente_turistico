@@ -26,7 +26,7 @@ const closeModal = () => {
         <Head title="Noticias" />
 
         <div class="container mx-auto py-12">
-            <h2 class="text-4xl font-bold text-center mb-10 text-[#64161d]">Últimas Noticias</h2>
+            <h2 class="text-4xl font-bold text-center mb-10 text-[#64161d] mt-6">Últimas Noticias</h2>
             <div class="news-feed">
                 <div v-for="item in news" :key="item.id" class="news-item bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-8">
                     <h3 class="text-2xl font-semibold mb-2 text-[#333]">{{ item.title }}</h3>

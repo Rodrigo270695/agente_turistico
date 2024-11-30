@@ -7,7 +7,7 @@
                     <img src="logo.png" alt="Logo" class="h-8 mr-2">
                 </div>
                 <div class="flex items-center space-x-4">
-                    <Link :href="route('about')" class="hover:text-[#e8a860]" :class="{ 'text-[#e8a860]': activePage === 'about' }">Sobre Nosotros</Link>
+                    <Link :href="route('about')" class="hover:text-[#e8a860]" :class="{ 'text-[#e8a860]': activePage === 'about' }">Noticias</Link>
                     <Link :href="route('places')" class="hover:text-[#e8a860]" :class="{ 'text-[#e8a860]': activePage === 'places' }">Lugares</Link>
                     <Link :href="route('visits.index')" class="hover:text-[#e8a860]" :class="{ 'text-[#e8a860]': activePage === 'visits' }">Mis Visitas</Link>
                 </div>

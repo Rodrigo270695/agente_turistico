@@ -20,8 +20,11 @@
     },
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
+        "apexcharts": "^4.1.0",
         "leaflet": "^1.9.4",
         "oh-vue-icons": "^1.0.0-rc3",
-        "sweetalert2": "^11.10.6"
+        "sweetalert2": "^11.10.6",
+        "swiper": "^11.1.15",
+        "vue3-apexcharts": "^1.8.0"
     }
 }

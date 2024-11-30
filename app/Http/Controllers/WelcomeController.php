@@ -120,11 +120,24 @@ class WelcomeController extends Controller
 
         $places = $query->select('places.*')->paginate(15)->appends($request->all());
 
+        $user = auth()->user();
+        if ($user) {
+            $lastVisit = $user->visits()->orderBy('created_at', 'desc')->first();
+            if ($lastVisit) {
+                $lastPlaceId = $lastVisit->place_id;
+                $recommendations = Http::get('http://127.0.0.1:5000/recomendaciones/' . $lastPlaceId)->json();
+                $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->whereIn('id', $recommendations['recomendaciones'])->get();
+            }
+        } else {
+            $recommendedPlaces = collect();
+        }
+
         return Inertia::render('PlacesCliente/Index', [
             'places' => $places,
             'departments' => Department::with('provinces.districts')->get(),
             'categories' => Category::with('typecategories')->get(),
             'searchParams' => $request->all(), // Añadir los parámetros de búsqueda
+            'recommendedPlaces' => $recommendedPlaces
         ]);
     }
 }

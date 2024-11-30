@@ -5,6 +5,9 @@ import TextInput from "@/Components/TextInput.vue";
 import Layout from "../Layout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { useForm } from "@inertiajs/vue3";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
+import { Navigation } from 'swiper/modules';
 import { ref, defineProps, watch, onMounted } from "vue";
 
 const props = defineProps({
@@ -287,88 +290,110 @@ const goToIndex = () => {
             </div>
         <!-- Lugares Recomendados -->
         <div v-if="props.recommendedPlaces.length > 0" class="mt-12 mx-4 md:mx-28">
-                <h2 class="text-2xl font-bold text-center mb-8 text-[#64161d]">Lugares Recomendados</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div v-for="recommendedPlace in props.recommendedPlaces" :key="recommendedPlace.id" class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img :src="recommendedPlace.photos.length ? recommendedPlace.photos[0].url : '/path/to/default-image.jpg'" :alt="recommendedPlace.nombre" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#64161d] mb-2">{{ recommendedPlace.nombre }}</h3>
-                            <p class="text-gray-600 mb-2 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-                                </svg>
-                                <strong>Ubicación: </strong>
-                                {{ recommendedPlace.district.province.name }} /
-                                {{ recommendedPlace.district.name }}
-                            </p>
-                            <p class="text-gray-600 mb-2 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13z"/>
-                                </svg>
-                                <strong>Época de visita:</strong>
-                                {{ recommendedPlace.epoca_visita }}
-                            </p>
-                            <p class="text-gray-600 mb-4 flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M20 11h-8V4H4v16h16V11zm-2 9H6V6h6v5h6v9z"/>
-                                </svg>
-                                <strong>Días abierto:</strong>
-                                {{ recommendedPlace.dias_abierto_desde }} -
-                                {{ recommendedPlace.dias_cerrado_hasta }}
-                            </p>
-                            <p class="text-gray-600 mb-4 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M3 21l18-18" />
-                                </svg>
-                                <strong>Distancia: </strong>
-                                {{ recommendedPlace.distancia_horas }} horas
-                            </p>
-                            <template v-if="recommendedPlace.prices.length > 0">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#64161d]">Lugares Recomendados</h2>
+            <div class="relative">
+                <!-- Botones de navegación -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <Swiper
+                    :modules="[Navigation]"
+                    :navigation="{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    }"
+                    :slides-per-view="1"
+                    :space-between="10"
+                    :breakpoints="{
+                        640: { slidesPerView: 1, spaceBetween: 20 },
+                        768: { slidesPerView: 2, spaceBetween: 40 },
+                        1024: { slidesPerView: 3, spaceBetween: 50 }
+                    }"
+                    class="mySwiper"
+                >
+                    <SwiperSlide v-for="recommendedPlace in props.recommendedPlaces" :key="recommendedPlace.id">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img :src="recommendedPlace.photos.length ? recommendedPlace.photos[0].url : '/path/to/default-image.jpg'" :alt="recommendedPlace.nombre" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-[#64161d] mb-2">{{ recommendedPlace.nombre }}</h3>
+                                <p class="text-gray-600 mb-2 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                                    </svg>
+                                    <strong>Ubicación: </strong>
+                                    {{ recommendedPlace.district.province.name }} /
+                                    {{ recommendedPlace.district.name }}
+                                </p>
+                                <p class="text-gray-600 mb-2 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13z"/>
+                                    </svg>
+                                    <strong>Época de visita:</strong>
+                                    {{ recommendedPlace.epoca_visita }}
+                                </p>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-[#64161d]" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20 11h-8V4H4v16h16V11zm-2 9H6V6h6v5h6v9z"/>
+                                    </svg>
+                                    <strong>Días abierto:</strong>
+                                    {{ recommendedPlace.dias_abierto_desde }} -
+                                    {{ recommendedPlace.dias_cerrado_hasta }}
+                                </p>
                                 <p class="text-gray-600 mb-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M3 21l18-18" />
                                     </svg>
-                                    <strong>Precio: </strong>
-                                    <div class="flex space-x-4">
-                                        <template v-for="price in recommendedPlace.prices" :key="price.id">
-                                            <span v-if="price.tipo_persona === 'Adulto'">
-                                                Adulto: {{ price.precio }}
-                                            </span>
-                                            <span v-if="price.tipo_persona === 'Estudiante'">
-                                                Estudiante: {{ price.precio }}
-                                            </span>
-                                            <span v-if="price.tipo_persona === 'Preferencial'">
-                                                Preferencial: {{ price.precio }}
-                                            </span>
-                                        </template>
-                                    </div>
+                                    <strong>Distancia: </strong>
+                                    {{ recommendedPlace.distancia_horas }} horas
                                 </p>
-                            </template>
-                            <template v-else>
-                                <p class="text-gray-600 mb-4 flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
-                                    <strong>Precio: </strong>Gratis
+                                <template v-if="recommendedPlace.prices.length > 0">
+                                    <p class="text-gray-600 mb-4 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <strong>Precio: </strong>
+                                        <div class="flex space-x-4">
+                                            <template v-for="price in recommendedPlace.prices" :key="price.id">
+                                                <span v-if="price.tipo_persona === 'Adulto'">
+                                                    Adulto: {{ price.precio }}
+                                                </span>
+                                                <span v-if="price.tipo_persona === 'Estudiante'">
+                                                    Estudiante: {{ price.precio }}
+                                                </span>
+                                                <span v-if="price.tipo_persona === 'Preferencial'">
+                                                    Preferencial: {{ price.precio }}
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </p>
+                                </template>
+                                <template v-else>
+                                    <p class="text-gray-600 mb-4 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-[#64161d]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <strong>Precio: </strong>Gratis
+                                    </p>
+                                </template>
+                                <p class="text-gray-600 mb-4">
+                                    <strong>LLegada: </strong> {{ recommendedPlace.tipo_acceso }}
+                                    <v-icon
+                                        v-if="recommendedPlace.tipo_acceso == 'PARCIAL'"
+                                        class="text-[#64161d]"
+                                        name="ri-footprint-fill"
+                                    />
+                                    <v-icon
+                                        class="text-[#64161d]"
+                                        name="fa-car-side"
+                                    />
                                 </p>
-                            </template>
-                            <p class="text-gray-600 mb-4">
-                                <strong>LLegada: </strong> {{ recommendedPlace.tipo_acceso }}
-                                <v-icon
-                                    v-if="recommendedPlace.tipo_acceso == 'PARCIAL'"
-                                    class="text-[#64161d]"
-                                    name="ri-footprint-fill"
-                                />
-                                <v-icon
-                                    class="text-[#64161d]"
-                                    name="fa-car-side"
-                                />
-                            </p>
-                            <Link :href="route('placesclient.show', recommendedPlace.id)" class="inline-block bg-[#64161d] text-white py-2 px-4 rounded-md hover:bg-[#e8a860]">Ver Detalles</Link>
+                                <Link :href="route('placesclient.show', recommendedPlace.id)" class="inline-block bg-[#64161d] text-white py-2 px-4 rounded-md hover:bg-[#e8a860]">Ver Detalles</Link>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </SwiperSlide>
+                </Swiper>
             </div>
+        </div>
         <!-- Tourist Centers Section -->
         <div class="mx-4 md:mx-28 py-12">
             <h2 class="text-2xl font-bold text-center mb-8 text-[#64161d]">

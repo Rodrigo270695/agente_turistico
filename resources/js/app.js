@@ -6,6 +6,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { OhVueIcon, addIcons } from "oh-vue-icons";
+import VueApexCharts from "vue3-apexcharts";
 
 import
 {
@@ -13,7 +14,7 @@ import
     PrImages, BiTrash, FaEye, BiCartFill, BiClockFill, IoReloadCircleSharp,
     ViFileTypePdf, ViFileTypeWord, ViFileTypeImage, ViDefaultFile, ViFileTypeExcel, BiFileEarmarkExcelFill,
     FaSearch, BiEyeFill, BiEyeSlashFill, GiExitDoor, MdDelete, MdChangecircleRound, MdPassword, MdAddphotoalternateRound, BiUpload,
-    MdArrowbackiosRound, MdPricecheck, RiFootprintFill, FaCarSide 
+    MdArrowbackiosRound, MdPricecheck, RiFootprintFill, FaCarSide
 } from "oh-vue-icons/icons";
 
 // Añade los iconos a oh-vue-icons
@@ -22,7 +23,7 @@ FaFlag, RiZhihuFill, IoAddCircleSharp, MdModeeditRound, GiCancel, FaCheck,
 PrImages, BiTrash, FaEye, BiCartFill, BiClockFill, IoReloadCircleSharp,
 ViFileTypePdf, ViFileTypeWord, ViFileTypeImage, ViDefaultFile, ViFileTypeExcel, BiFileEarmarkExcelFill,
 FaSearch, BiEyeFill, BiEyeSlashFill, GiExitDoor, MdDelete, MdChangecircleRound, MdPassword, MdAddphotoalternateRound, BiUpload,
-    MdArrowbackiosRound, MdPricecheck, RiFootprintFill, FaCarSide 
+    MdArrowbackiosRound, MdPricecheck, RiFootprintFill, FaCarSide
 );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -33,7 +34,8 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue);
+            .use(ZiggyVue)
+            .use(VueApexCharts);
 
         app.component("v-icon", OhVueIcon);
 

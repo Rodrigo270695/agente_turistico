@@ -15,7 +15,7 @@ defineProps({
         <Head title="Bienvenido" />
 
         <div class="container mx-auto py-12">
-        <h1 class="text-4xl font-bold text-center mb-8 text-[#64161d]">Sobre Nosotros</h1>
+        <h1 class="text-4xl font-bold text-center mb-8 text-[#64161d]">Noticias</h1>
         <div class="bg-white p-6 rounded-md shadow-md text-gray-900">
             <p class="mb-4">
                 Somos una empresa dedicada a ofrecer las mejores experiencias turísticas. Nuestro objetivo es ayudarte a encontrar la visita perfecta, ya sea que busques aventura, relajación o cultura.
