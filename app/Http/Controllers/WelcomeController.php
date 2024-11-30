@@ -23,20 +23,26 @@ class WelcomeController extends Controller
 
     public function places()
     {
-        $places = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->where('estado', 1)->orderBy('created_at', 'desc')->paginate(15);
+        $places = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')
+            ->where('estado', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
         $departments = Department::with(['provinces.districts'])->get();
         $categories = Category::with('typecategories')->where('estado', 1)->orderBy('nombre', 'asc')->get();
 
         $user = auth()->user();
+        $recommendedPlaces = collect(); // Asegúrate de inicializar la variable
+
         if ($user) {
             $lastVisit = $user->visits()->orderBy('created_at', 'desc')->first();
             if ($lastVisit) {
                 $lastPlaceId = $lastVisit->place_id;
                 $recommendations = Http::get('http://127.0.0.1:5000/recomendaciones/' . $lastPlaceId)->json();
-                $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')->whereIn('id', $recommendations['recomendaciones'])->get();
+                $recommendedPlaces = Place::with('subcategory.typecategory.category', 'district.province.department', 'photos', 'prices')
+                    ->whereIn('id', $recommendations['recomendaciones'])
+                    ->get();
             }
-        } else {
-            $recommendedPlaces = collect();
         }
 
         return Inertia::render('PlacesCliente/Index', compact('places', 'departments', 'categories', 'recommendedPlaces'));
